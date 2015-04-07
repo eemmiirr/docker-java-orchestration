@@ -68,10 +68,10 @@ class Repo {
         return
                 conf.hasTag()
                         ? conf.getTag()
-                        : imageName(id);
+                        : defaultImageName(id);
     }
 
-    public String imageName(Id id) {
+    public String defaultImageName(Id id) {
         return user + "/" + project + "_" + id;
     }
 
@@ -82,7 +82,7 @@ class Repo {
 	List<Container> findContainers(Id id, boolean allContainers) {
 		final List<Container> strings = new ArrayList<Container>();
 		for (Container container : docker.listContainersCmd().withShowAll(allContainers).exec()) {
-			if (container.getImage().equals(imageName(id)) || asList(container.getNames()).contains(containerName(id))) {
+			if (container.getImage().equals(tag(id)) || asList(container.getNames()).contains(containerName(id))) {
 				strings.add(container);
 			}
 		}
@@ -117,7 +117,7 @@ class Repo {
 
 	boolean imageExists(Id id) throws DockerException {
 		try {
-			docker.inspectImageCmd(imageName(id)).exec();
+			docker.inspectImageCmd(tag(id)).exec();
 			return true;
 		} catch (NotFoundException e) {
 			return false;

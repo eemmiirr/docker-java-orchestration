@@ -168,21 +168,21 @@ public class DockerOrchestrator {
     @SuppressWarnings(("DM_DEFAULT_ENCODING"))
     private void build(File dockerFolder, Id id) {
         try {
-            BuildImageCmd build = docker.buildImageCmd(dockerFolder);
-            for (BuildFlag f : buildFlags) {
-                switch (f) {
+            final BuildImageCmd build = docker.buildImageCmd(dockerFolder);
+            for (BuildFlag flag : buildFlags) {
+                switch (flag) {
                     case NO_CACHE:
                         build.withNoCache();
                         break;
                     case REMOVE_INTERMEDIATE_IMAGES:
-                        build.withRemove(true);
+                        build.withRemove();
                         break;
                     case QUIET:
                         build.withQuiet();
                 }
             }
             String tag = repo.tag(id);
-            build = build.withTag(tag);
+            build.withTag(tag);
             logger.info("Build " + id + " (" + tag + ")");
             throwExceptionIfThereIsAnError(build.exec());
 

@@ -84,7 +84,7 @@ public class DockerOrchestratorUTest {
 
         when(repoMock.src(idMock)).thenReturn(srcFileMock);
         when(repoMock.conf(idMock)).thenReturn(confMock);
-        when(repoMock.imageName(idMock)).thenReturn(IMAGE_NAME);
+        when(repoMock.defaultImageName(idMock)).thenReturn(IMAGE_NAME);
         when(repoMock.findImageId(idMock)).thenReturn(IMAGE_ID);
         when(repoMock.containerName(idMock)).thenReturn(CONTAINER_NAME);
 
