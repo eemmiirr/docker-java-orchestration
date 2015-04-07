@@ -169,6 +169,9 @@ public class DockerOrchestrator {
     private void build(File dockerFolder, Id id) {
         try {
             final BuildImageCmd build = docker.buildImageCmd(dockerFolder);
+
+            // Because default is true
+            build.withRemove(false);
             for (BuildFlag flag : buildFlags) {
                 switch (flag) {
                     case NO_CACHE:
